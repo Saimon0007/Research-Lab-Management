@@ -17,7 +17,6 @@ The Research Lab Management System is a robust web-based platform designed to st
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -120,11 +119,6 @@ The platform is built using a combination of front-end and back-end technologies
 3. **Explore modules:** Use the navigation menu to manage projects, inventory, equipment bookings, and more.
 4. **Admin Panel:** Administrators can manage users, system settings, and review analytics.
 
----
-
-## Screenshots
-
-> _Screenshots of the dashboard, project management, inventory, and booking modules can be placed here._
 
 ---
 
@@ -154,7 +148,3 @@ This project is licensed under the [MIT License](LICENSE).
 Saimon0007  
 [GitHub Profile](https://github.com/Saimon0007)  
 For issues, please submit through [GitHub Issues](https://github.com/Saimon0007/Research-Lab-Management/issues).
-
----
-
-_Enhance your research workflow. Manage, collaborate, and innovate with confidence!_
