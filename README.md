@@ -109,6 +109,7 @@ The platform is built using a combination of front-end and back-end technologies
 - **Email Notifications:** Set up SMTP credentials for email-based notifications.
 - **Admin User:** On the first run, create an admin user either via CLI or web interface.
 - **Static/Media Files:** Configure static and media file locations for file uploads.
+- **SAML Integration (Placeholder):** To integrate with a SAML-based identity provider, you will need to install a library like `python3-saml` and configure it with your identity provider's metadata. The specific configuration steps will vary depending on your identity provider.
 
 ---
 
