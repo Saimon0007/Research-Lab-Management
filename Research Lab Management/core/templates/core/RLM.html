@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Research Lab Management Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <nav
+    class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-14">
+        <div class="flex items-center space-x-2">
+          <img
+            alt="Research Lab Management logo with white RL letters on blue square background"
+            class="w-6 h-6"
+            height="24"
+            src="https://storage.googleapis.com/a1aa/image/6c714245-fd8c-46b7-ec76-8afcc52d7061.jpg"
+            width="24"
+          />
+          <span class="text-blue-800 font-semibold text-lg select-none"
+            >Research Lab Management</span
+          >
+        </div>
+        <div
+          class="hidden md:flex space-x-6 text-gray-700 text-sm font-medium select-none"
+        >
+          <a class="hover:text-gray-900" href="#dashboard">Dashboard</a>
+          <a class="hover:text-gray-900" href="#projects">Projects</a>
+          <a class="hover:text-gray-900" href="#equipment">Equipment</a>
+          <a class="hover:text-gray-900" href="#inventory">Inventory</a>
+          <a class="hover:text-gray-900" href="#staff">Staff</a>
+          <a class="hover:text-gray-900" href="#reports">Reports</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main class="pt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 id="dashboard" class="text-xl font-semibold mb-4 select-none">Dashboard</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div
+        class="bg-white rounded-lg shadow p-4 flex items-center space-x-4"
+      >
+        <div class="bg-blue-300 rounded-full p-3">
+          <i class="fas fa-flask text-blue-800 text-xl"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 select-none">Active Projects</p>
+          <p id="activeProjectsCount" class="font-semibold text-lg select-none">
+            0
+          </p>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg shadow p-4 flex items-center space-x-4"
+      >
+        <div class="bg-green-300 rounded-full p-3">
+          <i class="fas fa-microscope text-green-800 text-xl"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 select-none">Equipment</p>
+          <p id="equipmentCount" class="font-semibold text-lg select-none">0</p>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg shadow p-4 flex items-center space-x-4"
+      >
+        <div class="bg-yellow-300 rounded-full p-3">
+          <i class="fas fa-boxes text-yellow-800 text-xl"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 select-none">Inventory Items</p>
+          <p id="inventoryCount" class="font-semibold text-lg select-none">0</p>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg shadow p-4 flex items-center space-x-4"
+      >
+        <div class="bg-purple-300 rounded-full p-3">
+          <i class="fas fa-users text-purple-800 text-xl"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 select-none">Staff Members</p>
+          <p id="staffCount" class="font-semibold text-lg select-none">0</p>
+        </div>
+      </div>
+    </div>
+
+    <section id="projects" class="mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-lg font-semibold select-none">Projects</h3>
+        <button
+          id="addProjectBtn"
+          class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded px-4 py-2 flex items-center space-x-2"
+          type="button"
+        >
+          <i class="fas fa-plus"></i>
+          <span>Add Project</span>
+        </button>
+      </div>
+      <div class="overflow-x-auto rounded-md">
+        <table
+          id="projectsTable"
+          class="w-full text-xs text-blue-700 bg-blue-50 rounded-md border border-blue-100"
+        >
+          <thead>
+            <tr>
+              <th class="px-3 py-2 text-left font-semibold">NAME</th>
+              <th class="px-3 py-2 text-left font-semibold">LEAD RESEARCHER</th>
+              <th class="px-3 py-2 text-left font-semibold">SUPERVISOR</th>
+              <th class="px-3 py-2 text-left font-semibold">STATUS</th>
+              <th class="px-3 py-2 text-left font-semibold">START DATE</th>
+              <th class="px-3 py-2 text-left font-semibold">END DATE</th>
+              <th class="px-3 py-2 text-left font-semibold">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="equipment" class="mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-lg font-semibold select-none">Equipment</h3>
+        <button
+          id="addEquipmentBtn"
+          class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded px-4 py-2 flex items-center space-x-2"
+          type="button"
+        >
+          <i class="fas fa-plus"></i>
+          <span>Add Equipment</span>
+        </button>
+      </div>
+      <div class="overflow-x-auto rounded-md">
+        <table
+          id="equipmentTable"
+          class="w-full text-xs text-green-700 bg-green-50 rounded-md border border-green-100"
+        >
+          <thead>
+            <tr>
+              <th class="px-3 py-2 text-left font-semibold">NAME</th>
+              <th class="px-3 py-2 text-left font-semibold">TYPE</th>
+              <th class="px-3 py-2 text-left font-semibold">STATUS</th>
+              <th class="px-3 py-2 text-left font-semibold">LOCATION</th>
+              <th class="px-3 py-2 text-left font-semibold">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="inventory" class="mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-lg font-semibold select-none">Inventory</h3>
+        <button
+          id="addInventoryBtn"
+          class="bg-yellow-700 hover:bg-yellow-800 text-white text-sm font-bold rounded px-4 py-2 flex items-center space-x-2"
+          type="button"
+        >
+          <i class="fas fa-plus"></i>
+          <span>Add Item</span>
+        </button>
+      </div>
+      <div class="overflow-x-auto rounded-md">
+        <table
+          id="inventoryTable"
+          class="w-full text-xs text-yellow-700 bg-yellow-50 rounded-md border border-yellow-100"
+        >
+          <thead>
+            <tr>
+              <th class="px-3 py-2 text-left font-semibold">ITEM NAME</th>
+              <th class="px-3 py-2 text-left font-semibold">QUANTITY</th>
+              <th class="px-3 py-2 text-left font-semibold">UNIT</th>
+              <th class="px-3 py-2 text-left font-semibold">LOCATION</th>
+              <th class="px-3 py-2 text-left font-semibold">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="staff" class="mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-lg font-semibold select-none">Staff</h3>
+        <button
+          id="addStaffBtn"
+          class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold rounded px-4 py-2 flex items-center space-x-2"
+          type="button"
+        >
+          <i class="fas fa-plus"></i>
+          <span>Add Staff</span>
+        </button>
+      </div>
+      <div class="overflow-x-auto rounded-md">
+        <table
+          id="staffTable"
+          class="w-full text-xs text-purple-700 bg-purple-50 rounded-md border border-purple-100"
+        >
+          <thead>
+            <tr>
+              <th class="px-3 py-2 text-left font-semibold">NAME</th>
+              <th class="px-3 py-2 text-left font-semibold">ROLE</th>
+              <th class="px-3 py-2 text-left font-semibold">EMAIL</th>
+              <th class="px-3 py-2 text-left font-semibold">PHONE</th>
+              <th class="px-3 py-2 text-left font-semibold">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="reports" class="mb-12">
+      <h3 class="text-lg font-semibold mb-3 select-none">Reports</h3>
+      <div class="bg-white rounded-lg shadow p-4">
+        <p class="text-sm text-gray-700 mb-3 select-none">
+          Generate summary reports of projects, equipment usage, inventory status, and staff activities.
+        </p>
+        <div class="flex flex-wrap gap-3 mb-4">
+          <button id="projectReportBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded px-4 py-2 flex items-center space-x-2" type="button">
+            <i class="fas fa-file-alt"></i>
+            <span>Project Report</span>
+          </button>
+          <button id="equipmentReportBtn" class="bg-green-700 hover:bg-green-800 text-white text-sm font-medium rounded px-4 py-2 flex items-center space-x-2" type="button">
+            <i class="fas fa-file-invoice"></i>
+            <span>Equipment Report</span>
+          </button>
+          <button id="inventoryReportBtn" class="bg-yellow-700 hover:bg-yellow-800 text-white text-sm font-medium rounded px-4 py-2 flex items-center space-x-2" type="button">
+            <i class="fas fa-boxes"></i>
+            <span>Inventory Report</span>
+          </button>
+          <button id="staffReportBtn" class="bg-purple-700 hover:bg-purple-800 text-white text-sm font-medium rounded px-4 py-2 flex items-center space-x-2" type="button">
+            <i class="fas fa-users"></i>
+            <span>Staff Report</span>
+          </button>
+          <a href="{% url 'export_report' %}" class="bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded px-4 py-2 flex items-center space-x-2" type="button">
+            <i class="fas fa-file-excel"></i>
+            <span>Download Excel Report</span>
+          </a>
+        </div>
+        <div id="reportOutputContainer" class="transition-all duration-500 ease-in-out">
+          <!-- Animated summary cards will be injected here -->
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="text-center text-xs text-gray-600 py-4 select-none">
+    © 2024 Research Lab Management System. All rights reserved.
+  </footer>
+
+  <div
+    id="modal"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+  >
+    <div
+      class="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+      <h2 id="modalTitle" class="text-lg font-semibold mb-4"></h2>
+      <form id="modalForm" class="space-y-4" novalidate>
+        </form>
+      <div class="flex justify-end space-x-2 mt-4">
+        <button
+          id="modalCancelBtn"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-4 py-2 rounded"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          id="modalSaveBtn"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded"
+          type="button" >
+          Save
+        </button>
+      </div>
+      <button
+        id="modalCloseBtn"
+        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+        aria-label="Close modal"
+        type="button"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Data storage
+    const data = JSON.parse(localStorage.getItem('labManagementData')) || {
+      projects: [],
+      equipment: [],
+      inventory: [],
+      staff: [],
+    };
+
+    // Elements
+    const projectsTableBody = document.querySelector("#projectsTable tbody");
+    const equipmentTableBody = document.querySelector("#equipmentTable tbody");
+    const inventoryTableBody = document.querySelector("#inventoryTable tbody");
+    const staffTableBody = document.querySelector("#staffTable tbody");
+
+    const activeProjectsCount = document.getElementById("activeProjectsCount");
+    const equipmentCount = document.getElementById("equipmentCount");
+    const inventoryCount = document.getElementById("inventoryCount");
+    const staffCount = document.getElementById("staffCount");
+
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalForm = document.getElementById("modalForm");
+    const modalCancelBtn = document.getElementById("modalCancelBtn");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+    const modalSaveBtn = document.getElementById("modalSaveBtn");
+
+    let currentSection = null;
+    let editIndex = null;
+
+    // Utility to create input fields
+    function createInputField({ label, name, type = "text", value = "", required = true }) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "flex flex-col";
+
+      const labelEl = document.createElement("label");
+      labelEl.className = "text-sm font-medium mb-1";
+      labelEl.htmlFor = name;
+      labelEl.textContent = label;
+
+      const inputEl = document.createElement("input");
+      inputEl.className =
+        "border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500";
+      inputEl.type = type;
+      inputEl.id = name;
+      inputEl.name = name;
+      inputEl.value = value;
+      if (required) inputEl.required = true;
+
+      wrapper.appendChild(labelEl);
+      wrapper.appendChild(inputEl);
+      return wrapper;
+    }
+
+    // Render functions (Unchanged, but now saveData() will work)
+    function renderProjects() {
+      projectsTableBody.innerHTML = "";
+      data.projects.forEach((project, index) => {
+        const tr = document.createElement("tr");
+        tr.className = "border-t border-blue-100";
+        tr.innerHTML = `
+          <td class="px-3 py-2">${escapeHtml(project.name)}</td>
+          <td class="px-3 py-2">${escapeHtml(project.leadResearcher)}</td>
+          <td class="px-3 py-2">${escapeHtml(project.supervisor)}</td>
+          <td class="px-3 py-2">${escapeHtml(project.status)}</td>
+          <td class="px-3 py-2">${escapeHtml(project.startDate)}</td>
+          <td class="px-3 py-2">${escapeHtml(project.endDate)}</td>
+          <td class="px-3 py-2">
+            <button data-index="${index}" class="edit-project text-blue-600 hover:underline mr-2" title="Edit Project" type="button"><i class="fas fa-edit"></i></button>
+            <button data-index="${index}" class="delete-project text-red-600 hover:underline" title="Delete Project" type="button"><i class="fas fa-trash-alt"></i></button>
+          </td>`;
+        projectsTableBody.appendChild(tr);
+      });
+      updateCounts();
+      attachProjectListeners();
+      saveData();
+    }
+    function renderEquipment() {
+      equipmentTableBody.innerHTML = "";
+      data.equipment.forEach((item, index) => {
+        const tr = document.createElement("tr");
+        tr.className = "border-t border-green-100";
+        tr.innerHTML = `
+          <td class="px-3 py-2">${escapeHtml(item.name)}</td>
+          <td class="px-3 py-2">${escapeHtml(item.type)}</td>
+          <td class="px-3 py-2">${escapeHtml(item.status)}</td>
+          <td class="px-3 py-2">${escapeHtml(item.location)}</td>
+          <td class="px-3 py-2">
+            <button data-index="${index}" class="edit-equipment text-green-700 hover:underline mr-2" title="Edit Equipment" type="button"><i class="fas fa-edit"></i></button>
+            <button data-index="${index}" class="delete-equipment text-red-700 hover:underline" title="Delete Equipment" type="button"><i class="fas fa-trash-alt"></i></button>
+          </td>`;
+        equipmentTableBody.appendChild(tr);
+      });
+      updateCounts();
+      attachEquipmentListeners();
+      saveData();
+    }
+    function renderInventory() {
+      inventoryTableBody.innerHTML = "";
+      data.inventory.forEach((item, index) => {
+        const tr = document.createElement("tr");
+        tr.className = "border-t border-yellow-100";
+        tr.innerHTML = `
+          <td class="px-3 py-2">${escapeHtml(item.itemName)}</td>
+          <td class="px-3 py-2">${escapeHtml(item.quantity)}</td>
+          <td class="px-3 py-2">${escapeHtml(item.unit)}</td>
+          <td class="px-3 py-2">${escapeHtml(item.location)}</td>
+          <td class="px-3 py-2">
+            <button data-index="${index}" class="edit-inventory text-yellow-700 hover:underline mr-2" title="Edit Inventory Item" type="button"><i class="fas fa-edit"></i></button>
+            <button data-index="${index}" class="delete-inventory text-red-700 hover:underline" title="Delete Inventory Item" type="button"><i class="fas fa-trash-alt"></i></button>
+          </td>`;
+        inventoryTableBody.appendChild(tr);
+      });
+      updateCounts();
+      attachInventoryListeners();
+      saveData();
+    }
+    function renderStaff() {
+      staffTableBody.innerHTML = "";
+      data.staff.forEach((member, index) => {
+        const tr = document.createElement("tr");
+        tr.className = "border-t border-purple-100";
+        tr.innerHTML = `
+          <td class="px-3 py-2">${escapeHtml(member.name)}</td>
+          <td class="px-3 py-2">${escapeHtml(member.role)}</td>
+          <td class="px-3 py-2">${escapeHtml(member.email)}</td>
+          <td class="px-3 py-2">${escapeHtml(member.phone)}</td>
+          <td class="px-3 py-2">
+            <button data-index="${index}" class="edit-staff text-purple-700 hover:underline mr-2" title="Edit Staff Member" type="button"><i class="fas fa-edit"></i></button>
+            <button data-index="${index}" class="delete-staff text-red-700 hover:underline" title="Delete Staff Member" type="button"><i class="fas fa-trash-alt"></i></button>
+          </td>`;
+        staffTableBody.appendChild(tr);
+      });
+      updateCounts();
+      attachStaffListeners();
+      saveData();
+    }
+
+    function saveData() {
+      localStorage.setItem('labManagementData', JSON.stringify(data));
+    }
+    function escapeHtml(text) {
+      if (!text) return "";
+      return text
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+    function updateCounts() {
+      activeProjectsCount.textContent = data.projects.length;
+      equipmentCount.textContent = data.equipment.length;
+      inventoryCount.textContent = data.inventory.length;
+      staffCount.textContent = data.staff.length;
+    }
+
+    // Attach listeners (Unchanged)
+    function attachProjectListeners() { /* ... unchanged ... */
+        document.querySelectorAll(".edit-project").forEach((btn) => { btn.onclick = () => { editIndex = parseInt(btn.dataset.index); openModal("projects", "Edit Project", data.projects[editIndex]); }; });
+        document.querySelectorAll(".delete-project").forEach((btn) => { btn.onclick = () => { if (confirm("Are you sure?")) { data.projects.splice(parseInt(btn.dataset.index), 1); renderProjects(); } }; });
+    }
+    function attachEquipmentListeners() { /* ... unchanged ... */
+        document.querySelectorAll(".edit-equipment").forEach((btn) => { btn.onclick = () => { editIndex = parseInt(btn.dataset.index); openModal("equipment", "Edit Equipment", data.equipment[editIndex]); }; });
+        document.querySelectorAll(".delete-equipment").forEach((btn) => { btn.onclick = () => { if (confirm("Are you sure?")) { data.equipment.splice(parseInt(btn.dataset.index), 1); renderEquipment(); } }; });
+    }
+    function attachInventoryListeners() { /* ... unchanged ... */
+        document.querySelectorAll(".edit-inventory").forEach((btn) => { btn.onclick = () => { editIndex = parseInt(btn.dataset.index); openModal("inventory", "Edit Inventory Item", data.inventory[editIndex]); }; });
+        document.querySelectorAll(".delete-inventory").forEach((btn) => { btn.onclick = () => { if (confirm("Are you sure?")) { data.inventory.splice(parseInt(btn.dataset.index), 1); renderInventory(); } }; });
+    }
+    function attachStaffListeners() { /* ... unchanged ... */
+        document.querySelectorAll(".edit-staff").forEach((btn) => { btn.onclick = () => { editIndex = parseInt(btn.dataset.index); openModal("staff", "Edit Staff Member", data.staff[editIndex]); }; });
+        document.querySelectorAll(".delete-staff").forEach((btn) => { btn.onclick = () => { if (confirm("Are you sure?")) { data.staff.splice(parseInt(btn.dataset.index), 1); renderStaff(); } }; });
+    }
+
+    // Open modal (Unchanged - clears form, adds fields)
+    function openModal(section, title, item = null) {
+      currentSection = section;
+      // Set editIndex based on whether it's an edit or add action
+      editIndex = (item !== null) ? data[section].indexOf(item) : null;
+      modalTitle.textContent = title;
+      modalForm.innerHTML = ""; // Clear form fields
+
+      let fields = [];
+      if (section === "projects") { /* ... unchanged ... */
+        fields = [ { label: "Name", name: "name", value: item ? item.name : "" }, { label: "Lead Researcher", name: "leadResearcher", value: item ? item.leadResearcher : "" }, { label: "Supervisor", name: "supervisor", value: item ? item.supervisor : "" }, { label: "Status", name: "status", value: item ? item.status : "" }, { label: "Start Date", name: "startDate", type: "date", value: item ? item.startDate : "" }, { label: "End Date", name: "endDate", type: "date", value: item ? item.endDate : "" } ];
+      } else if (section === "equipment") { /* ... unchanged ... */
+        fields = [ { label: "Name", name: "name", value: item ? item.name : "" }, { label: "Type", name: "type", value: item ? item.type : "" }, { label: "Status", name: "status", value: item ? item.status : "" }, { label: "Location", name: "location", value: item ? item.location : "" } ];
+      } else if (section === "inventory") { /* ... unchanged ... */
+        fields = [ { label: "Item Name", name: "itemName", value: item ? item.itemName : "" }, { label: "Quantity", name: "quantity", type: "number", value: item ? item.quantity : "" }, { label: "Unit", name: "unit", value: item ? item.unit : "" }, { label: "Location", name: "location", value: item ? item.location : "" } ];
+      } else if (section === "staff") { /* ... unchanged ... */
+        fields = [ { label: "Name", name: "name", value: item ? item.name : "" }, { label: "Role", name: "role", value: item ? item.role : "" }, { label: "Email", name: "email", type: "email", value: item ? item.email : "" }, { label: "Phone", name: "phone", type: "tel", value: item ? item.phone : "" } ];
+      }
+
+      fields.forEach(field => modalForm.appendChild(createInputField(field)));
+      modal.classList.remove("hidden");
+    }
+
+    // Close modal (Unchanged)
+    function closeModal() {
+      modal.classList.add("hidden");
+      modalForm.reset();
+      currentSection = null;
+      editIndex = null;
+    }
+
+    // MODIFIED: Created a dedicated handleSave function
+    function handleSave() {
+      const formData = new FormData(modalForm);
+      const obj = {};
+      formData.forEach((value, key) => {
+        obj[key] = value.trim();
+      });
+
+      // Simple validation check: ensure at least the first field has a value
+      const firstInput = modalForm.querySelector('input');
+      if (firstInput && !firstInput.value.trim()) {
+          alert("Please fill in at least the first field.");
+          return; // Stop saving if the first field is empty
+      }
+
+      if (currentSection === "projects") {
+        if (editIndex !== null && editIndex >= 0) {
+          data.projects[editIndex] = obj;
+        } else {
+          data.projects.push(obj);
+        }
+        renderProjects();
+      } else if (currentSection === "equipment") {
+        if (editIndex !== null && editIndex >= 0) {
+          data.equipment[editIndex] = obj;
+        } else {
+          data.equipment.push(obj);
+        }
+        renderEquipment();
+      } else if (currentSection === "inventory") {
+        if (editIndex !== null && editIndex >= 0) {
+          data.inventory[editIndex] = obj;
+        } else {
+          data.inventory.push(obj);
+        }
+        renderInventory();
+      } else if (currentSection === "staff") {
+        if (editIndex !== null && editIndex >= 0) {
+          data.staff[editIndex] = obj;
+        } else {
+          data.staff.push(obj);
+        }
+        renderStaff();
+      }
+
+      closeModal();
+    }
+
+    // MODIFIED: Form submit listener now calls handleSave
+    modalForm.addEventListener("submit", (e) => {
+      e.preventDefault(); // Always prevent default for forms handled by JS
+      handleSave();
+    });
+
+    // MODIFIED: Save button click listener now calls handleSave
+    modalSaveBtn.addEventListener("click", () => {
+      handleSave();
+    });
+
+    // Cancel and close buttons (Unchanged)
+    modalCancelBtn.onclick = closeModal;
+    modalCloseBtn.onclick = closeModal;
+
+    // Add buttons (Unchanged)
+    document.getElementById("addProjectBtn").onclick = () => openModal("projects", "Add Project");
+    document.getElementById("addEquipmentBtn").onclick = () => openModal("equipment", "Add Equipment");
+    document.getElementById("addInventoryBtn").onclick = () => openModal("inventory", "Add Inventory Item");
+    document.getElementById("addStaffBtn").onclick = () => openModal("staff", "Add Staff Member");
+
+    // Report buttons (Unchanged)
+
+    // Helper to animate cards
+    function animateCards() {
+      const cards = document.querySelectorAll('.report-card');
+      cards.forEach((card, i) => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+          card.style.transition = 'all 0.5s cubic-bezier(.4,2,.6,1)';
+          card.style.opacity = 1;
+          card.style.transform = 'translateY(0)';
+        }, 100 + i * 120);
+      });
+    }
+
+    // Helper to render pretty summary cards
+    function renderSummaryCards(type, items) {
+      const container = document.getElementById('reportOutputContainer');
+      container.innerHTML = '';
+      if (!items.length) {
+        container.innerHTML = `<div class="text-gray-400 italic text-center py-6">No data available.</div>`;
+        return;
+      }
+      let html = '';
+      if (type === 'projects') {
+        html = items.map(p => `
+          <div class="report-card bg-blue-50 border-l-4 border-blue-400 shadow p-4 mb-3 rounded-lg">
+            <div class="font-bold text-blue-800 text-lg mb-1 flex items-center"><i class='fas fa-flask mr-2'></i>${p.name}</div>
+            <div class="text-xs text-blue-700 mb-1">Lead: <b>${p.leadResearcher}</b> | Supervisor: <b>${p.supervisor}</b></div>
+            <div class="text-xs">Status: <span class="font-semibold">${p.status}</span> | <span class="text-gray-500">${p.startDate} - ${p.endDate || 'N/A'}</span></div>
+          </div>
+        `).join('');
+      } else if (type === 'equipment') {
+        html = items.map(e => `
+          <div class="report-card bg-green-50 border-l-4 border-green-400 shadow p-4 mb-3 rounded-lg">
+            <div class="font-bold text-green-800 text-lg mb-1 flex items-center"><i class='fas fa-microscope mr-2'></i>${e.name}</div>
+            <div class="text-xs text-green-700 mb-1">Type: <b>${e.type}</b> | Location: <b>${e.location}</b></div>
+            <div class="text-xs">Status: <span class="font-semibold">${e.status}</span></div>
+          </div>
+        `).join('');
+      } else if (type === 'inventory') {
+        html = items.map(i => `
+          <div class="report-card bg-yellow-50 border-l-4 border-yellow-400 shadow p-4 mb-3 rounded-lg">
+            <div class="font-bold text-yellow-800 text-lg mb-1 flex items-center"><i class='fas fa-boxes mr-2'></i>${i.itemName}</div>
+            <div class="text-xs text-yellow-700 mb-1">Quantity: <b>${i.quantity}</b> ${i.unit} | Location: <b>${i.location}</b></div>
+          </div>
+        `).join('');
+      } else if (type === 'staff') {
+        html = items.map(s => `
+          <div class="report-card bg-purple-50 border-l-4 border-purple-400 shadow p-4 mb-3 rounded-lg">
+            <div class="font-bold text-purple-800 text-lg mb-1 flex items-center"><i class='fas fa-user mr-2'></i>${s.name}</div>
+            <div class="text-xs text-purple-700 mb-1">Role: <b>${s.role}</b> | Email: <b>${s.email}</b></div>
+            <div class="text-xs">Phone: <span class="font-semibold">${s.phone}</span></div>
+          </div>
+        `).join('');
+      }
+      container.innerHTML = html;
+      animateCards();
+    }
+
+    document.getElementById("projectReportBtn").onclick = () => renderSummaryCards('projects', data.projects);
+    document.getElementById("equipmentReportBtn").onclick = () => renderSummaryCards('equipment', data.equipment);
+    document.getElementById("inventoryReportBtn").onclick = () => renderSummaryCards('inventory', data.inventory);
+    document.getElementById("staffReportBtn").onclick = () => renderSummaryCards('staff', data.staff);
+
+    // Initial render (Unchanged)
+    renderProjects();
+    renderEquipment();
+    renderInventory();
+    renderStaff();
+  </script>
+</body>
+</html>
